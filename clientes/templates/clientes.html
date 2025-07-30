@@ -8,19 +8,19 @@
 {% block 'dashboard' %}
     <div class="container">
         <div class="row">
-            <div class="col-md card-dashboard">
-                <p class="text-card">Aicionar clientes</p>
+            <div onclick="exibir_form('1')" class="col-md card-dashboard">
+                <p class="text-card">Adicionar clientes</p>
             </div>
             
-            <div class="col-md card-dashboard">
+            <div onclick="exibir_form('2')" class="col-md card-dashboard">
                 <p class="text-card">Atualizar clientes</p>
             </div>
         </div>
 
-            <div class="adicionar-cliente">
+            <div id="adicionar-cliente" class="adicionar-cliente">
                 <form action="{% url 'clientes' %}" method="POST">{% csrf_token %}
-                  <div class="row">      
-                    <div class="col-md">
+                    <div class="row">      
+                        <div class="col-md">
                             <p>Nome:</p>
                             <input type="text" class="form-control" placeholder="Primeiro nome" name="nome" value="{{nome}}">
                         </div>
@@ -39,25 +39,29 @@
                     <div class="add-maquina">
                         <h3>Descrição da máquina</h3>
                         <span class="btn-add-maquina" onclick="add_maquina()">+ Adicionar uma maquina</span>
-
-                        <div id="form-maquina">
-                                <br>
-                                    <div class="row">
-                                        <div class="col-md">
-                                            <textarea placeholder='Descrição da máquina' class='form-control' name='maquina' rows='4'>{{ maquina }}</textarea>
-                                        </div>
-
-                                    </div>
-                        </div>
-
+                        <div id="form-maquina" style="display: none;" data-maquina="{{ maquina }}"></div>
                     </div>
-
                     <br>
                     <input type="submit" value="Cadastrar" class="btn-principal">
-
                 </form>
-      
-        </div>
+            </div>    
+            <div id="att_cliente">
+                <p></p>
+                <select id="cliente-select" onchange="dados_cliente()" class="form-control">
+                    {% for cliente in clientes %}
+                    <option value="{{cliente.id}}">{{cliente.nome}}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
     </div>
     <script src="{% static 'clientes/js/clientes.js' %}"></script>
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const formMaquina = document.getElementById('form-maquina');
+        if (formMaquina.getAttribute('data-maquina').trim() !== '') {
+            add_maquina();
+        }
+    });
+    </script>
 {% endblock %}

@@ -39,12 +39,31 @@
                     <div class="add-maquina">
                         <h3>Descrição da máquina</h3>
                         <span class="btn-add-maquina" onclick="add_maquina()">+ Adicionar uma maquina</span>
-                        <div id="form-maquina" style="display: none;" data-maquina="{{ maquina }}"></div>
+                        <p></p>
+                        <div id="form-maquina">
+                            {% if maquina %}
+                                {% for m in maquina %}
+                                <br>
+                                    <div class='row'>
+                                        <div class='col-md'>
+                                            <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina' value="{{ m }}">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class='row'>
+                                    <div class='col-md'>
+                                        <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina'>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                     <br>
                     <input type="submit" value="Cadastrar" class="btn-principal">
                 </form>
             </div>    
+            
             <div id="att_cliente">
                 <p></p>
                 <select id="cliente-select" onchange="dados_cliente()" class="form-control">
@@ -70,12 +89,4 @@
             </div>
     </div>
     <script src="{% static 'clientes/js/clientes.js' %}"></script>
-    <script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const formMaquina = document.getElementById('form-maquina');
-        if (formMaquina.getAttribute('data-maquina').trim() !== '') {
-            add_maquina();
-        }
-    });
-    </script>
 {% endblock %}

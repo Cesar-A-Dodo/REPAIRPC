@@ -1,23 +1,21 @@
 function add_maquina() {
-    const container = document.getElementById('form-maquina');
-    const valorAntigo = container.getAttribute('data-maquina') || '';  // pega do atributo
+    container = document.getElementById('form-maquina')
 
-    const html = `
+    html = `
         <br>
         <div class='row'>
             <div class='col-md'>
-                <textarea placeholder='Descrição da máquina' class='form-control' name='maquina' rows='4'>${valorAntigo}</textarea>
+                <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina'>
             </div>
         </div>
     `;
 
-    container.innerHTML = html;
-    container.style.display = 'block';
+    container.innerHTML += html;
 }
 
 function exibir_form(tipo){
-    const add_cliente = document.getElementById('adicionar-cliente');
-    const att_cliente = document.getElementById('att_cliente');
+    add_cliente = document.getElementById('adicionar-cliente');
+    att_cliente = document.getElementById('att_cliente');
 
     if(tipo == "1"){
         att_cliente.style.display = "none";

@@ -14,7 +14,7 @@ def clientes(request):
         sobrenome = request.POST.get('sobrenome')
         email = request.POST.get('email')
         cpf = request.POST.get('cpf')
-        maquina = request.POST.get('maquina')
+        maquina = request.POST.getlist('maquina')
 
         cliente = Cliente.objects.filter(cpf=cpf)
 
@@ -33,14 +33,20 @@ def clientes(request):
 
         cliente.save()
 
-        maq = Maquina(maquina=maquina, cliente=cliente)
+        for m in maquina:
+            maq = Maquina(maquina=m, cliente=cliente)
 
-        maq.save()
+            maq.save()
 
         return HttpResponse('test')
 
 def att_cliente(request):
     id_cliente = request.POST.get('id_cliente')
+    
     cliente = Cliente.objects.filter(id=id_cliente)
+    maquinas = Maquina.objects.filter(cliente=cliente[0])
+    
     cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
+    maquinas_json = json.loads(serializers.serialize('json', maquinas))
+    print(maquinas_json)
     return JsonResponse(cliente_json)

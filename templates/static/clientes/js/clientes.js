@@ -8,21 +8,22 @@ function add_maquina() {
                 <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina'>
             </div>
         </div>
-    `;
+    `
 
-    container.innerHTML += html;
+    container.innerHTML += html
 }
 
 function exibir_form(tipo){
-    add_cliente = document.getElementById('adicionar-cliente');
-    att_cliente = document.getElementById('att_cliente');
+    
+    add_cliente = document.getElementById('adicionar-cliente')
+    att_cliente = document.getElementById('att_cliente')
 
     if(tipo == "1"){
-        att_cliente.style.display = "none";
-        add_cliente.style.display = "block";
+        att_cliente.style.display = "none"
+        add_cliente.style.display = "block"
     } else if(tipo == "2"){
-        att_cliente.style.display = "block";
-        add_cliente.style.display = "none";
+        add_cliente.style.display = "none"
+        att_cliente.style.display = "block"
     }
 }
 
@@ -44,20 +45,34 @@ function dados_cliente(){
     }).then(function(result){
         return result.json()
     }).then(function(data){
-        
+
         document.getElementById('form-att-cliente').style.display = 'block'
 
-        nome = document.getElementById('nome')
-        nome.value = data['nome']
+        nome = document.getElementById('nome').value = data['cliente']['nome']
+        nome.value = data['cliente']['nome']
 
         sobrenome = document.getElementById('sobrenome')
-        sobrenome.value = data['sobrenome']
+        sobrenome.value = data['cliente']['sobrenome']
 
         cpf = document.getElementById('cpf')
-        cpf.value = data['cpf']
+        cpf.value = data['cliente']['cpf']
 
         email = document.getElementById('email')
-        email.value = data['email']
+        email.value = data['cliente']['email']
+        
+        div_maquinas = document.getElementById('maquinas')
 
+        div_maquinas.innerHTML = ""
+        for(i = 0; i < data['maquinas'].length; i++) {
+            console.log(data['maquinas'][i]['fields']['maquina'])
+
+            div_maquinas.innerHTML += `<form action='' method=''>
+                <div class='row'>
+                    <div class='col-md'>
+                        <input type='text' name='maquina' class='form-control' value="${data['maquinas'][i]['fields']['maquina']}">
+                    </div>
+                </div>
+            `;
+        }
     })
 }

@@ -6,8 +6,8 @@ class Cliente(models.Model):
     email = models.EmailField(max_length=50)
     cpf = models.CharField(max_length=12)
 
-def __str__(self) -> str:
-    return self.nome
+    def __str__(self) -> str:
+        return self.nome
 
 class Maquina(models.Model):
     maquina = models.CharField(max_length=500)

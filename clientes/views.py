@@ -14,15 +14,15 @@ def clientes(request):
         sobrenome = request.POST.get('sobrenome')
         email = request.POST.get('email')
         cpf = request.POST.get('cpf')
-        maquina = request.POST.getlist('maquina')
+        maquinas = request.POST.getlist('maquina')
 
         cliente = Cliente.objects.filter(cpf=cpf)
 
         if cliente.exists():
-            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'maquina': maquina})
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'maquina': maquinas or []})
         
         if not re.fullmatch(re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'), email):
-            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'cpf': cpf, 'maquina': maquina})
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'cpf': cpf, 'maquina': maquinas or []})
 
         cliente = Cliente(
             nome = nome,
@@ -33,7 +33,7 @@ def clientes(request):
 
         cliente.save()
 
-        for m in maquina:
+        for m in maquinas:
             maq = Maquina(maquina=m, cliente=cliente)
 
             maq.save()
@@ -46,7 +46,9 @@ def att_cliente(request):
     cliente = Cliente.objects.filter(id=id_cliente)
     maquinas = Maquina.objects.filter(cliente=cliente[0])
     
-    cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
+    clientes_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
     maquinas_json = json.loads(serializers.serialize('json', maquinas))
-    print(maquinas_json)
-    return JsonResponse(cliente_json)
+    maquinas_json = [{'fields': i['fields'], 'id': i['pk']} for i in maquinas_json]
+    data = {'cliente':clientes_json, 'maquinas':maquinas_json  }
+    
+    return JsonResponse(data)

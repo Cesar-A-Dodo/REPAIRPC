@@ -41,22 +41,14 @@
                         <span class="btn-add-maquina" onclick="add_maquina()">+ Adicionar uma maquina</span>
                         <p></p>
                         <div id="form-maquina">
-                            {% if maquina %}
-                                {% for m in maquina %}
+                            {% for m in maquinas %}
                                 <br>
-                                    <div class='row'>
-                                        <div class='col-md'>
-                                            <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina' value="{{ m }}">
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
                                 <div class='row'>
                                     <div class='col-md'>
-                                        <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina'>
+                                        <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquinas' value="{{ m }}">
                                     </div>
                                 </div>
-                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                     <br>
@@ -67,6 +59,7 @@
             <div id="att_cliente">
                 <p></p>
                 <select id="cliente-select" onchange="dados_cliente()" class="form-control">
+                    <option value=""></option>
                     {% for cliente in clientes %}
                     <option value="{{cliente.id}}">{{cliente.nome}}</option>
                     {% endfor %}
@@ -84,8 +77,7 @@
                     <p>CPF:</p>
                     <input id="cpf" type="text" class='form-control'>
                     <hr>
-                    <h3>Maquinas</h3>
-
+                    <h2>Maquinas</h2>
                     <div id="maquinas">
                         
                     </div>

@@ -1,14 +1,7 @@
 function add_maquina() {
     container = document.getElementById('form-maquina')
 
-    html = `
-        <br>
-        <div class='row'>
-            <div class='col-md'>
-                <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina'>
-            </div>
-        </div>
-    `
+    html = "<br> <div class='row'> <div class='col-md'> <input type='text' placeholder='Descrição da máquina' class='form-control' name='maquina'> </div> </div>"
 
     container.innerHTML += html
 }
@@ -48,7 +41,7 @@ function dados_cliente(){
 
         document.getElementById('form-att-cliente').style.display = 'block'
 
-        nome = document.getElementById('nome').value = data['cliente']['nome']
+        nome = document.getElementById('nome')
         nome.value = data['cliente']['nome']
 
         sobrenome = document.getElementById('sobrenome')
@@ -61,18 +54,23 @@ function dados_cliente(){
         email.value = data['cliente']['email']
         
         div_maquinas = document.getElementById('maquinas')
-
+        
         div_maquinas.innerHTML = ""
-        for(i = 0; i < data['maquinas'].length; i++) {
-            console.log(data['maquinas'][i]['fields']['maquina'])
+        for (i = 0; i < data['maquinas'].length; i++) {
+            valor = data['maquinas'][i]['fields']['maquina']
+            div_maquinas.innerHTML += "<form action='/clientes/update_maquina/" + data['maquinas'][i]['id'] + "' method='POST'>\
+                <div class='row'>\
+                    <div class='col-md'>\
+                        <input class='form-control' type='text' name='maquina' value='" + data['maquinas'][i]['fields']['maquina'] + "'>\
+                    </div>\
+                    <div class='col-md'>\
+                        <input class='btn-success' type='submit' value='Salvar'>\
+                    </div>\
+                    </form>\
+                        <a class='btn-danger' href='/clientes/excluir_maquina/" + data['maquinas'][i]['id'] + "'>EXCLUIR</a>\
+                </div><br>"
+                
 
-            div_maquinas.innerHTML += `<form action='' method=''>
-                <div class='row'>
-                    <div class='col-md'>
-                        <input type='text' name='maquina' class='form-control' value="${data['maquinas'][i]['fields']['maquina']}">
-                    </div>
-                </div>
-            `;
         }
     })
 }

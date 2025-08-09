@@ -4,6 +4,9 @@ from .models import Cliente, Maquina
 import re
 from django.core import serializers
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from django.shortcuts import redirect
 
 def clientes(request):
     if request.method == "GET":
@@ -52,3 +55,20 @@ def att_cliente(request):
     data = {'cliente':clientes_json, 'maquinas':maquinas_json  }
     
     return JsonResponse(data)
+
+@csrf_exempt
+def update_maquina(request, id):
+    sel_maquina = request.POST.get('maquina')
+    maquina = Maquina.objects.get(id=id)
+    maquina.maquina = sel_maquina
+
+    maquina.save()
+    return HttpResponse('Dados alterados com sucesso!')
+
+def excluir_maquina(request, id):
+    try:
+        maquina = Maquina.objects.get(id=id)
+        maquina.delete()
+        return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')
+    except:
+        return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')

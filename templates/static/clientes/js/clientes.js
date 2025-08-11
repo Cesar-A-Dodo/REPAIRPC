@@ -60,17 +60,17 @@ function dados_cliente(){
             valor = data['maquinas'][i]['fields']['maquina']
             div_maquinas.innerHTML += "<form action='/clientes/update_maquina/" + data['maquinas'][i]['id'] + "' method='POST'>\
                 <div class='row'>\
-                    <div class='col-md'>\
-                        <input class='form-control' type='text' name='maquina' value='" + data['maquinas'][i]['fields']['maquina'] + "'>\
-                    </div>\
-                    <div class='col-md'>\
-                        <input class='btn-success' type='submit' value='Salvar'>\
-                    </div>\
+                        <div class='col-md'>\
+                            <input class='form-control' type='text' name='maquina' value='" + data['maquinas'][i]['fields']['maquina'] + "'>\
+                        </div>\
+                        <div class='col-md-auto'>\
+                            <input class='btn btn-lg btn-success' type='submit' value='Salvar'>\
+                        </div>\
                     </form>\
-                        <a class='btn-danger' href='/clientes/excluir_maquina/" + data['maquinas'][i]['id'] + "'>EXCLUIR</a>\
+                    <div class='col-md-auto'>\
+                        <a href='/clientes/excluir_maquina/" + data['maquinas'][i]['id'] + "' class='btn btn-lg btn-danger'>EXCLUIR</a>\
+                    </div>\
                 </div><br>"
-                
-
         }
     })
 }

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import CategoriaManutenção, Servico
+
+admin.site.register(CategoriaManutenção)
+admin.site.register(Servico)

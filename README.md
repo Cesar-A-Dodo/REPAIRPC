@@ -51,6 +51,7 @@ Acesse: http://localhost:8000
 **Cesar Augusto Dodô**  
 📧 cesaraugustododo@gmail.com  
 🔗 [GitHub](https://github.com/Cesar-A-Dodo)
+🔗 [LinkedIn](https://www.linkedin.com/in/cesaraugustododo/)
 
 ## 📄 Licença
 
